@@ -37,13 +37,10 @@ hint - you should be looking at the stage key inside of the objects
 */
 
 function getFinals(data) {
-    /* code here */
-    const finalTeams = data.filter(team => team["Stage"] === "Final");
-    return finalTeams;
+
+    return data.filter(team => team["Stage"] === "Final");
+
 }
-// console.log(getFinals(fifaData));
-
-
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 3: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher-order function called getYears to do the following: 
@@ -52,13 +49,13 @@ Use the higher-order function called getYears to do the following:
 3. Return an array called years containing all of the years in the getFinals data set*/
 
 function getYears(arr, cb) {
-    /* code here */
-    const finalsYears = cb;
-    return finalsYears.map((item) => item["Year"]);
+    // When I try to pass arr to cb, I get cb is not a function...
+
+    // return cb(arr).map(item => item["Year"]);
+    return cb.map(item => item["Year"]);
 }
 
-// console.log(getYears(fifaData, getFinals(fifaData)));
-
+getYears(getFinals(fifaData), fifaData);
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -69,7 +66,7 @@ Use the higher-order function getWinners to do the following:
 4. Returns the names of all winning countries in an array called `winners` */
 
 function getWinners(arr, cb) {
-    /* code here */
+
     const finalTeams = cb;
     let winners = [];
 
@@ -83,7 +80,6 @@ function getWinners(arr, cb) {
     }
     return winners;
 }
-// console.log(getWinners(fifaData, getFinals(fifaData)));
 
 
 
@@ -108,7 +104,6 @@ function getWinnersByYear(arr, cb1, cb2) {
     });
     return finalsArray;
 }
-console.log(getWinnersByYear(fifaData, getWinners(fifaData, getFinals(fifaData)), getYears(fifaData, getFinals(fifaData))));
 
 
 
@@ -123,9 +118,13 @@ Use the higher order function getAverageGoals to do the following:
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
-function getAverageGoals( /* code here */ ) {
-    /* code here */
+function getAverageGoals(data) {
+
+    return (getFinals(data).reduce((total, item) => {
+        return total += (item['Away Team Goals'] + item['Home Team Goals'])
+    }, 0) / getFinals(data).length).toFixed(2);
 }
+
 
 
 
